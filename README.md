@@ -1,6 +1,6 @@
 # eldey
 
-A new Flutter project.
+A simple app that makes it easy to get the weather prediction and prepares you for it.
 
 ## Getting Started
 

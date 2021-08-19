@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-// Components
+import './store/store.dart';
 import './components/dashboard.dart';
 
 void main() {
@@ -15,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Eldey',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const Dashboard(title: 'Eldey'),
+      home: Dashboard(),
+      // home: Store(counter: 0, child: Dashboard()),
     );
   }
 }
