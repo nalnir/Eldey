@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
-
 // Components
-import './forecastCard.dart';
+import './forecast.dart';
+
+// Utils
+import '../misc/utils/utils.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -15,70 +14,56 @@ class Dashboard extends StatefulWidget {
   State<Dashboard> createState() => _DashboardState();
 }
 
-class Weather {
-  final Iterable data;
-  
-  Weather({
-    required this.data,
-  });
-
-  factory Weather.fromJson(Iterable<dynamic> json) {
-    return Weather(
-      data: json,
-    );
-  }
-}
-
 class _DashboardState extends State<Dashboard> {
   late Future<Map> futureWeather;
 
-  Future<Map> fetchWeather() async {
-    final response = await http.get(Uri.parse('https://apis.is/weather/forecasts/en?stations=1'));
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to load weather data');
-    }
-  }
-
   @override
   void initState() {
+    findClosest();
     super.initState();
     futureWeather = fetchWeather();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Eldey'),
-      ),
-      body: Center(
-        child: FutureBuilder<Map>(
-            future: futureWeather,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Card(
-                  child: ForecastCard(data: snapshot.data!['results'][0])
-                );
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-              return const CircularProgressIndicator();
-            },
-          ),
-      ),
+    return FutureBuilder<Map>(
+      future: futureWeather,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          String name = snapshot.data!['results'][0]['name'];
+          List transformed = transform(snapshot.data!['results'][0]['forecast']);
+          return Forecast(name: name, data: transformed);
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+        return const CircularProgressIndicator();
+      },
     );
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text('Eldey'),
+    //   ),
+    //   body: Center(
+    //     child: FutureBuilder<Map>(
+    //         future: futureWeather,
+    //         builder: (context, snapshot) {
+    //           if (snapshot.hasData) {
+    //             Map data = snapshot.data!['results'][0];
+    //             List transformed = transform(data['forecast']);
+    //             return Column(
+    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //               children: [
+    //                 new Text(data['name']),
+
+    //               ],
+    //             );
+    //           } else if (snapshot.hasError) {
+    //             return Text('${snapshot.error}');
+    //           }
+    //           return const CircularProgressIndicator();
+    //         },
+    //       ),
+    //   ),
+    // );
   }
 }
-
-// class Dashboard extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return StatefulBuilder(
-//       builder: (BuildContext context, StateSetter setState) {
-//         int counter = Store.of(context).counter;
-//       },
-//     );
-//   }
-// }
