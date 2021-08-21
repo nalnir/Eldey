@@ -19,51 +19,38 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
-    findClosest();
+    // findClosest();
     super.initState();
-    futureWeather = fetchWeather();
+    // futureWeather = fetchWeather();
+  }
+
+  refresh() {
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Map>(
-      future: futureWeather,
+      future: fetchWeather(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          String name = snapshot.data!['results'][0]['name'];
-          List transformed = transform(snapshot.data!['results'][0]['forecast']);
-          return Forecast(name: name, data: transformed);
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+             return const CircularProgressIndicator();
+          case ConnectionState.waiting:
+             return const CircularProgressIndicator();
+          case ConnectionState.active:
+            return const CircularProgressIndicator();
+          case ConnectionState.done:
+            if (snapshot.hasData) {
+              String name = snapshot.data!['results'][0]['name'];
+              List transformed = transform(snapshot.data!['results'][0]['forecast']);
+              return Forecast(name: name, data: transformed, refresh: refresh,);
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+            return const CircularProgressIndicator();
         }
-        return const CircularProgressIndicator();
       },
     );
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text('Eldey'),
-    //   ),
-    //   body: Center(
-    //     child: FutureBuilder<Map>(
-    //         future: futureWeather,
-    //         builder: (context, snapshot) {
-    //           if (snapshot.hasData) {
-    //             Map data = snapshot.data!['results'][0];
-    //             List transformed = transform(data['forecast']);
-    //             return Column(
-    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: [
-    //                 new Text(data['name']),
-
-    //               ],
-    //             );
-    //           } else if (snapshot.hasError) {
-    //             return Text('${snapshot.error}');
-    //           }
-    //           return const CircularProgressIndicator();
-    //         },
-    //       ),
-    //   ),
-    // );
   }
 }
