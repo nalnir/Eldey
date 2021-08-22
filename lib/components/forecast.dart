@@ -18,10 +18,22 @@ class Forecast extends StatefulWidget {
 class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
   int navigationIndex = 0;
   late TabController _tabController; 
+  int timeIndex = 0;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: widget.data.length);
+    _tabController.addListener(() {
+      print(widget.data[_tabController.index]['time'][timeIndex]);
+
+    });
+  }
+
+  setIndex(data) {
+    setState(() {
+      timeIndex = data;
+    });
   }
 
   @override
@@ -40,11 +52,19 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
           )
         ],
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: widget.data.map<Widget>((view) {
-          return ForecastCard(data: view['time']);
-        }).toList(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: widget.data.map<Widget>((view) {
+                return ForecastCard(data: view['time'], setIndex: setIndex);
+              }).toList(),
+            ),
+          )
+        ],
       ),
       bottomNavigationBar: TabBar(
         controller: _tabController,

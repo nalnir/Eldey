@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+
 // Components
 import './forecast.dart';
 
@@ -16,22 +17,24 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   late Future<Map> futureWeather;
+  bool fetchNew = false;
 
   @override
   void initState() {
-    // findClosest();
     super.initState();
-    // futureWeather = fetchWeather();
+    fetchNew != fetchNew;
   }
 
   refresh() {
-    setState(() {});
+    setState(() {
+      fetchNew = !fetchNew;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Map>(
-      future: fetchWeather(),
+      future: fetchWeather(fetchNew),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
