@@ -1,0 +1,8 @@
+{
+    "helloWorld": "Hello World!",
+    "navbartext": "Eldey got data from ",
+    "navbartextend": " station",
+    "@helloWorld": {
+      "description": "The conventional newborn programmer greeting"
+    }
+}

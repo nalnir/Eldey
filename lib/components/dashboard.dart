@@ -22,19 +22,22 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    fetchNew != fetchNew;
   }
 
   refresh() {
     setState(() {
-      fetchNew = !fetchNew;
+      fetchNew = true;
+      Future.delayed(const Duration(milliseconds: 100), () {
+        fetchNew = false;
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    Locale locale = Localizations.localeOf(context);
     return FutureBuilder<Map>(
-      future: fetchWeather(fetchNew),
+      future: fetchWeather(fetchNew, locale),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:

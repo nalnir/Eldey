@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class ForecastCard extends StatefulWidget {
   final List data;
   final Function setIndex;
+  final int timeIndex;
 
-  const ForecastCard({Key? key, required this.data, required this.setIndex}) : super(key: key);
+  const ForecastCard({Key? key, required this.data, required this.setIndex, required this.timeIndex}) : super(key: key);
 
   @override
   State<ForecastCard> createState() => _ForecastCardState();
@@ -12,13 +13,17 @@ class ForecastCard extends StatefulWidget {
 
 
 class _ForecastCardState extends State<ForecastCard> with TickerProviderStateMixin {
-  int navigationIndex = 0;
   late TabController _tabController; 
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: widget.data.length);
+    if(widget.timeIndex >  widget.data.length){
+      _tabController.index = 0;
+    } else {
+      _tabController.index = widget.timeIndex;
+    }
     _tabController.addListener(() {
       widget.setIndex(_tabController.index);
     });

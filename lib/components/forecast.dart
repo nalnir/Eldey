@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Components
 import './forecastCard.dart';
+import './eldey.dart';
 
 class Forecast extends StatefulWidget {
   final String name;
@@ -19,20 +21,31 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
   int navigationIndex = 0;
   late TabController _tabController; 
   int timeIndex = 0;
+  late Map dataForEldey;
+  
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: widget.data.length);
+    dataForEldey = widget.data[_tabController.index]['time'][timeIndex];
     _tabController.addListener(() {
-      print(widget.data[_tabController.index]['time'][timeIndex]);
-
+      if(timeIndex > widget.data[_tabController.index]['time'].length){
+        setState(() {
+          dataForEldey = widget.data[_tabController.index]['time'][0];
+        });
+      } else {
+        setState(() {
+          dataForEldey = widget.data[_tabController.index]['time'][timeIndex];
+        });
+      }
     });
   }
 
   setIndex(data) {
     setState(() {
       timeIndex = data;
+      dataForEldey = widget.data[_tabController.index]['time'][timeIndex];
     });
   }
 
@@ -41,7 +54,7 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Eldey got data from '+widget.name+' station',
+          AppLocalizations.of(context)!.navbartext + widget.name + AppLocalizations.of(context)!.navbartextend,
           style: const TextStyle(fontSize: 13)
         ),
         actions: [
@@ -53,14 +66,14 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
         ],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         children: [
+          Eldey(data: dataForEldey),
           Expanded(
             child: TabBarView(
               controller: _tabController,
               children: widget.data.map<Widget>((view) {
-                return ForecastCard(data: view['time'], setIndex: setIndex);
+                return ForecastCard(data: view['time'], setIndex: setIndex, timeIndex: timeIndex);
               }).toList(),
             ),
           )

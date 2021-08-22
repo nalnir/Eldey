@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import './store/store.dart';
+
+// Localization
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+// Components
 import './components/dashboard.dart';
 
 void main() {
@@ -17,7 +21,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Dashboard(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: const Dashboard(),
       // home: Store(counter: 0, child: Dashboard()),
     );
   }
