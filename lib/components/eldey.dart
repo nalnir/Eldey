@@ -19,6 +19,8 @@ class _EldeyState extends State<Eldey> {
 
   Artboard? _riveArtboard;
   StateMachineController? _controller;
+
+  // Animation triggers
   SMITrigger? _isDay;
   SMITrigger? _isNight;
 
@@ -39,6 +41,8 @@ class _EldeyState extends State<Eldey> {
 
         // The artboard is the root of the animation and gets drawn in the
         // Rive widget.
+
+        // Using 2 State Machines to blend animations together depending on the data.
         final artboard = file.mainArtboard;
         var controller = StateMachineController.fromArtboard(artboard, 'Day Change');
         var controller1 = StateMachineController.fromArtboard(artboard, 'Temp Change');
@@ -64,12 +68,14 @@ class _EldeyState extends State<Eldey> {
     int time = int.parse(widget.data['ftime'].substring(0,2));
     int temp = int.parse(widget.data['T']);
 
+    // Checking for time in a day.
     if(time < 18  && time > 5) { 
       _isDay?.fire();
     } else if(time < 25  && time > 17 || time >= 0 && time < 18){ 
       _isNight?.fire();
     }
 
+    // Checking for temperature.
     if(temp < 5) { 
       _isFreezing?.fire();
     } 
@@ -80,17 +86,16 @@ class _EldeyState extends State<Eldey> {
     }
 
     return _riveArtboard == null
-          ? const SizedBox()
-          : SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Rive(
-                artboard: _riveArtboard!,
-                alignment: Alignment.topCenter,
-                fit: BoxFit.fill,
-                useArtboardSize: false
-              ),
-            );
-          
+      ? const SizedBox()
+      : SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Rive(
+            artboard: _riveArtboard!,
+            alignment: Alignment.topCenter,
+            fit: BoxFit.fill,
+            useArtboardSize: false
+          ),
+        ); 
   }
 }

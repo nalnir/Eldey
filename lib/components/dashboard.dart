@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-
 // Components
 import './forecast.dart';
 import './loading.dart';
@@ -26,6 +25,9 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
   }
 
+  /* Function providing an id of the weather station or an empty string. 
+    Empty String is used if client allowed to get the current location of the device.
+  */
   refresh(sID) {
     setState(() {
       stationID = sID;
@@ -39,6 +41,10 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    /* Checking for locale. Default is 'en' for english. 
+      Since Data can be fetched in 2 languages we inject local into fetchWeather method to specify
+      in which language should API return it's data.
+    */
     Locale locale = Localizations.localeOf(context);
     return FutureBuilder<Map>(
       future: fetchWeather(fetchNew, locale.toString(), stationID),

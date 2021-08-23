@@ -42,7 +42,6 @@ class _ForecastCardState extends State<ForecastCard> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    print(dataForEldey);
     return Scaffold(
       body: Center(
         child: Column(

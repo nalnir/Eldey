@@ -43,6 +43,7 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
     });
   }
 
+  // Specifing index of the chaild TabBar.
   setIndex(data) {
     setState(() {
       timeIndex = data;
@@ -50,6 +51,7 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
     });
   }
 
+  // Playground Function to substract from the currently viewed temperature
   takeTemp(index) {
     Map modified = widget.data[_tabController.index]['time'][index];
     modified['T'] = (int.parse(modified['T']) - 1).toString();
@@ -58,6 +60,7 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
     });
   }
 
+  // Playground Function to add to the currently viewed temperature
   addTemp(index) {
     Map modified = widget.data[_tabController.index]['time'][index];
     modified['T'] = (int.parse(modified['T']) + 1).toString();

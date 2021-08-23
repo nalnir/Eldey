@@ -10,9 +10,12 @@ import 'package:geolocator/geolocator.dart';
 
 
 // Async functions
+
+// Finding closes station from the list of Icelandic stations;
 Future<String> findClosest() async {
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     String jsonData = await rootBundle.loadString('assets/data/stationsList.json');
+    print(json.decode(jsonData)['list'].length);
     final jsonResult = json.decode(jsonData);
     var stationsList = jsonResult["list"] as List;
 
@@ -42,6 +45,7 @@ Future<Map> fetchWeather(shouldFetchNew, locale, stationID) async {
   }
 }
 
+// Function fetching either from API or local storage
 Future <Map> fetchFromApi(locale, String sID) async {
   String stationID = sID;
   if(stationID == ''){
@@ -56,6 +60,7 @@ Future <Map> fetchFromApi(locale, String sID) async {
   }
 }
 
+// Local Storage Functions
 Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
     return directory.path;
@@ -92,6 +97,7 @@ double calculateDistance(lat,long,lat2,long2) {
   return Geolocator.distanceBetween(lat, long, lat2, long2);
 }
 
+// Transforming list for an easy access
 List transform(list) {
   List dates = [];
   List listOfObj = [];

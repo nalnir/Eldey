@@ -17,7 +17,7 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   int selectedIndex = 0;
   Map stationIDS = {0: '1', 1: '422', 2: '2642', 3: '571', 4: '6300'};
-
+  
   _onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -31,15 +31,17 @@ class _LoadingState extends State<Loading> {
       backgroundColor: Colors.blueAccent,
       body: const Center(
         child: RiveAnimation.asset(
-            'assets/animations/testing.riv',
+            'assets/animations/eldey_v2.riv',
             fit: BoxFit.contain,
         ),
       ),
+      /* If client didn't allow fetching the current location,
+      he has an ability to pick the weather forecast from 5 given locations */
       bottomNavigationBar: widget.stationPick ? Column(
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: [ 
-          Text(AppLocalizations.of(context)!.chooseMessage, style: TextStyle( color: Colors.white, fontFamily: 'KleeOne', fontSize: 20)),
+          Text(AppLocalizations.of(context)!.chooseMessage, style: const TextStyle( color: Colors.white, fontFamily: 'KleeOne', fontSize: 20)),
           BottomNavigationBar(
             currentIndex: selectedIndex,
             onTap: _onItemTapped,

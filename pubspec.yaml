@@ -1,5 +1,5 @@
 name: eldey
-description: A new Flutter project.
+description: Weather Forecast App with a cute twist.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -36,6 +36,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
+  flutter_launcher_icons: ^0.7.4
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -52,6 +53,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/eldey.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
