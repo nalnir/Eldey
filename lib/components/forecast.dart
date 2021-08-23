@@ -30,7 +30,7 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
     _tabController = TabController(vsync: this, length: widget.data.length);
     dataForEldey = widget.data[_tabController.index]['time'][timeIndex];
     _tabController.addListener(() {
-      if(timeIndex > widget.data[_tabController.index]['time'].length){
+      if(timeIndex >= widget.data[_tabController.index]['time'].length){
         setState(() {
           dataForEldey = widget.data[_tabController.index]['time'][0];
         });
@@ -53,9 +53,10 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.orangeAccent,
         title: Text(
           AppLocalizations.of(context)!.navbartext + widget.name + AppLocalizations.of(context)!.navbartextend,
-          style: const TextStyle(fontSize: 13)
+          style: const TextStyle(fontSize: 12, fontFamily: 'KleeOne'), 
         ),
         actions: [
           IconButton(
@@ -66,9 +67,13 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Eldey(data: dataForEldey),
+          Expanded(
+            child: Eldey(data: dataForEldey)
+          ),
           Expanded(
             child: TabBarView(
               controller: _tabController,
@@ -79,17 +84,19 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
           )
         ],
       ),
-      bottomNavigationBar: TabBar(
-        controller: _tabController,
-        indicatorColor: Colors.blue,
-        isScrollable: true,
-        labelColor: Colors.blue,
-        tabs: widget.data.map<Widget>((item) {
-          return Tab(
-            text: item['date'],
-          );
-        }).toList(),
-      ),
+      bottomNavigationBar: Material(
+        color: Colors.orangeAccent,
+        child: TabBar(
+          controller: _tabController,
+          indicatorColor: Colors.blue,
+          isScrollable: true,
+          tabs: widget.data.map<Widget>((item) {
+            return Tab(
+              text: item['date'],
+            );
+          }).toList(),
+        ),
+      )
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Components
 import './forecast.dart';
+import './loading.dart';
 
 // Utils
 import '../misc/utils/utils.dart';
@@ -37,24 +38,24 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     Locale locale = Localizations.localeOf(context);
     return FutureBuilder<Map>(
-      future: fetchWeather(fetchNew, locale),
+      future: fetchWeather(fetchNew, locale.toString()),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
-             return const CircularProgressIndicator();
+             return Loading(stationPick: true);
           case ConnectionState.waiting:
-             return const CircularProgressIndicator();
+             return Loading(stationPick: true);
           case ConnectionState.active:
-            return const CircularProgressIndicator();
+            return Loading(stationPick: true);
           case ConnectionState.done:
             if (snapshot.hasData) {
               String name = snapshot.data!['results'][0]['name'];
               List transformed = transform(snapshot.data!['results'][0]['forecast']);
               return Forecast(name: name, data: transformed, refresh: refresh,);
             } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
+              return Loading(stationPick: true);
             }
-            return const CircularProgressIndicator();
+            return Loading(stationPick: false);
         }
       },
     );

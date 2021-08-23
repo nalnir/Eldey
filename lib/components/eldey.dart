@@ -18,7 +18,8 @@ class _EldeyState extends State<Eldey> {
 
   Artboard? _riveArtboard;
   StateMachineController? _controller;
-  SMIInput<num>? _hoursInput;
+  SMITrigger? _isDay;
+  SMITrigger? _isNight;
 
   @override
   void initState() {
@@ -26,7 +27,7 @@ class _EldeyState extends State<Eldey> {
 
     // Load the animation file from the bundle, note that you could also
     // download this. The RiveFile just expects a list of bytes.
-    rootBundle.load('assets/animations/testing_3.riv').then(
+    rootBundle.load('assets/animations/testing.riv').then(
       (data) async {
         // Load the RiveFile from the binary data.
         final file = RiveFile.import(data);
@@ -34,10 +35,11 @@ class _EldeyState extends State<Eldey> {
         // The artboard is the root of the animation and gets drawn in the
         // Rive widget.
         final artboard = file.mainArtboard;
-        var controller = StateMachineController.fromArtboard(artboard, 'State Machine');
+        var controller = StateMachineController.fromArtboard(artboard, 'Day Change');
         if (controller != null) {
           artboard.addController(controller);
-          _hoursInput = controller.findInput('Hours');
+          _isDay = controller.findInput<bool>('day') as SMITrigger;
+          _isNight = controller.findInput<bool>('night') as SMITrigger;
         }
         setState(() => _riveArtboard = artboard);
       },
@@ -47,24 +49,22 @@ class _EldeyState extends State<Eldey> {
   @override
   Widget build(BuildContext context) {
     int time = int.parse(widget.data['ftime'].substring(0,2));
-    if(time > 9  && time < 17){
-      print('day');
-      setState(() {
-        _hoursInput?.value = 99.0;
-      });
-    }
-    return Expanded(
-      child: Center(
-        child: _riveArtboard == null
+    // I have no idea what is || operator in dart. Why do you have to change things google >:(
+    if(time < 18  && time > 5){ _isDay?.fire();
+    } else if(time < 25  && time > 17 || time >= 0 && time < 18){ _isNight?.fire();}
+    
+    return _riveArtboard == null
           ? const SizedBox()
           : SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: Rive(
                 artboard: _riveArtboard!,
+                alignment: Alignment.topCenter,
+                fit: BoxFit.fill,
+                useArtboardSize: false
               ),
-            ),
-          )
-    );
+            );
+          
   }
 }

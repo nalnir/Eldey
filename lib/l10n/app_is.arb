@@ -1,5 +1,14 @@
 {
     "helloWorld": "Góðan daginn",
     "navbartext": "Eldey fékk upplýsingar frá ",
-    "navbartextend": " stöð"
+    "navbartextend": " stöð",
+
+    "f": "Vindhraði (m/s): ",
+    "d": "Vindstefna: ",
+    "t": "Hiti (°C): ",
+    "w": "Veðurlýsing: ",
+
+    "n": "Skýjahula (%): ",
+    "td": "Daggarmark (°C): ",
+    "r": "Uppsöfnuð úrkoma (mm/klst) úr sjálfvirkum mælum: "
 }

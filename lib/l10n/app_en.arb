@@ -2,7 +2,14 @@
     "helloWorld": "Hello World!",
     "navbartext": "Eldey got data from ",
     "navbartextend": " station",
-    "@helloWorld": {
-      "description": "The conventional newborn programmer greeting"
-    }
+    
+    "f": "Wind speed (m/s): ",
+    "d": "Wind direction: ",
+    "t": "Air temperature (°C): ",
+    "w": "Weather description: ",
+
+    "n": "Cloud cover (%): ",
+    "td": "Dew limit (°C): ",
+    "r": "Cumulative precipitation (mm/h) from automatic measuring units: "
+
 }
