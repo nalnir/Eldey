@@ -22,8 +22,9 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
   late TabController _tabController; 
   int timeIndex = 0;
   late Map dataForEldey;
-  
 
+  bool playGroundMode = false;
+  
   @override
   void initState() {
     super.initState();
@@ -46,6 +47,12 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
     setState(() {
       timeIndex = data;
       dataForEldey = widget.data[_tabController.index]['time'][timeIndex];
+    });
+  }
+
+  setPlayground(){
+    setState(() {
+      playGroundMode = !playGroundMode;
     });
   }
 
@@ -72,7 +79,7 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-            child: Eldey(data: dataForEldey)
+            child: Eldey(data: dataForEldey, setPlayground: setPlayground) 
           ),
           Expanded(
             child: TabBarView(
