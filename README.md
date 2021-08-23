@@ -25,26 +25,26 @@ Such as:
     - Clothing suggestions
 
     - Entertainment suggestions
-    
+
     - Travel suggestions
 
 Eldey can have some potential. Maybe we should take it there...
 
 Dependencies used:
 
-  http - for API data fetching
+    - http: for API data fetching
 
-  geolocator - getting current GPS location of the device
+    - geolocator: getting current GPS location of the device
 
-  path_provider - for storing and retrieving data in a local memory
+    - path_provider: for storing and retrieving data in a local memory
 
-  rive - for animations
+    - rive: for animations
 
-  flutter_localizations - for multiple language support
+    - flutter_localizations: for multiple language support
 
-  intl - for multiple language support
+    - intl: for multiple language support
 
-  flutter_launcher_icons - for App Icon
+    - flutter_launcher_icons: for App Icon
 
 Additional Info:
 Eldey supports english and icelandic languages based on your device localization.
