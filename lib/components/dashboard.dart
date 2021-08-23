@@ -19,16 +19,19 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   late Future<Map> futureWeather;
   bool fetchNew = false;
+  String stationID = '';
 
   @override
   void initState() {
     super.initState();
   }
 
-  refresh() {
+  refresh(sID) {
     setState(() {
+      stationID = sID;
       fetchNew = true;
       Future.delayed(const Duration(milliseconds: 100), () {
+        stationID = '';
         fetchNew = false;
       });
     });
@@ -38,24 +41,24 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     Locale locale = Localizations.localeOf(context);
     return FutureBuilder<Map>(
-      future: fetchWeather(fetchNew, locale.toString()),
+      future: fetchWeather(fetchNew, locale.toString(), stationID),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
-             return Loading(stationPick: true);
+             return Loading(stationPick: false, fetchByStation: refresh);
           case ConnectionState.waiting:
-             return Loading(stationPick: true);
+             return Loading(stationPick: false, fetchByStation: refresh);
           case ConnectionState.active:
-            return Loading(stationPick: true);
+            return Loading(stationPick: false, fetchByStation: refresh);
           case ConnectionState.done:
             if (snapshot.hasData) {
               String name = snapshot.data!['results'][0]['name'];
               List transformed = transform(snapshot.data!['results'][0]['forecast']);
               return Forecast(name: name, data: transformed, refresh: refresh,);
             } else if (snapshot.hasError) {
-              return Loading(stationPick: true);
+              return Loading(stationPick: true, fetchByStation: refresh);
             }
-            return Loading(stationPick: false);
+            return Loading(stationPick: false, fetchByStation: refresh);
         }
       },
     );

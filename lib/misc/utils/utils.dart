@@ -29,22 +29,24 @@ Future<String> findClosest() async {
     return id;
 }
 
-Future<Map> fetchWeather(shouldFetchNew, locale) async {
-  print(shouldFetchNew);
+Future<Map> fetchWeather(shouldFetchNew, locale, stationID) async {
   if(shouldFetchNew){
-    return await fetchFromApi(locale);
+    return await fetchFromApi(locale, stationID);
   } else {
     String cache = await getData();
     if(cache == 'error'){
-      return await fetchFromApi(locale);
+      return await fetchFromApi(locale, stationID);
     } else {
       return json.decode(cache);
     }
   }
 }
 
-Future <Map> fetchFromApi(locale) async {
-  String stationID = await findClosest();
+Future <Map> fetchFromApi(locale, String sID) async {
+  String stationID = sID;
+  if(stationID == ''){
+    stationID = await findClosest();
+  } 
   final response = await http.get(Uri.parse('https://apis.is/weather/forecasts/'+locale+'?stations='+stationID));
   if (response.statusCode == 200) {
     await setData(response.body);

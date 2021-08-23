@@ -10,5 +10,7 @@
 
     "n": "Skýjahula (%): ",
     "td": "Daggarmark (°C): ",
-    "r": "Uppsöfnuð úrkoma (mm/klst) úr sjálfvirkum mælum: "
+    "r": "Uppsöfnuð úrkoma (mm/klst) úr sjálfvirkum mælum: ",
+
+    "choosemessage": "Veldu Stað"
 }

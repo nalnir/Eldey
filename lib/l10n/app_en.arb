@@ -10,6 +10,8 @@
 
     "n": "Cloud cover (%): ",
     "td": "Dew limit (°C): ",
-    "r": "Cumulative precipitation (mm/h) from automatic measuring units: "
+    "r": "Cumulative precipitation (mm/h) from automatic measuring units: ",
+    
+    "chooseMessage": "Choose Place"
 
 }

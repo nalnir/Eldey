@@ -60,7 +60,7 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
         ),
         actions: [
           IconButton(
-            onPressed: () async { widget.refresh(); },
+            onPressed: () async { widget.refresh(''); },
             icon: const Icon(Icons.refresh),
             color: Colors.white,
           )
