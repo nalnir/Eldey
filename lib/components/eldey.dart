@@ -6,8 +6,7 @@ import 'package:rive/rive.dart';
 /// An example showing how to drive two boolean state machine inputs.
 class Eldey extends StatefulWidget {
   final Map data;
-  final Function setPlayground;
-  const Eldey({Key? key, required this.data, required this.setPlayground}) : super(key: key);
+  const Eldey({Key? key, required this.data}) : super(key: key);
 
   @override
   _EldeyState createState() => _EldeyState();
@@ -85,15 +84,12 @@ class _EldeyState extends State<Eldey> {
           : SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              child: GestureDetector(
-                onDoubleTap: widget.setPlayground(),
-                child: Rive(
-                  artboard: _riveArtboard!,
-                  alignment: Alignment.topCenter,
-                  fit: BoxFit.fill,
-                  useArtboardSize: false
-                ),
-              )
+              child: Rive(
+                artboard: _riveArtboard!,
+                alignment: Alignment.topCenter,
+                fit: BoxFit.fill,
+                useArtboardSize: false
+              ),
             );
           
   }

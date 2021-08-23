@@ -7,7 +7,11 @@ class ForecastCard extends StatefulWidget {
   final Function setIndex;
   final int timeIndex;
 
-  const ForecastCard({Key? key, required this.data, required this.setIndex, required this.timeIndex}) : super(key: key);
+  final Function takeTemp;
+  final Function addTemp;
+
+  const ForecastCard({Key? key, required this.data, required this.setIndex, 
+  required this.timeIndex, required this.takeTemp, required this.addTemp}) : super(key: key);
 
   @override
   State<ForecastCard> createState() => _ForecastCardState();
@@ -45,12 +49,16 @@ class _ForecastCardState extends State<ForecastCard> with TickerProviderStateMix
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.wb_sunny_outlined),
-                Text(AppLocalizations.of(context)!.t + dataForEldey['T'], style: const TextStyle(fontFamily: 'KleeOne'),),
-              ],
+            GestureDetector(
+              onTap: ()=>widget.takeTemp(_tabController.index),
+              onDoubleTap: ()=>widget.addTemp(_tabController.index),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.wb_sunny_outlined),
+                  Text(AppLocalizations.of(context)!.t + dataForEldey['T'], style: const TextStyle(fontFamily: 'KleeOne')),
+                ],
+              )
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

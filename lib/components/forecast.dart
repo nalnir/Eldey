@@ -50,9 +50,19 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
     });
   }
 
-  setPlayground(){
+  takeTemp(index) {
+    Map modified = widget.data[_tabController.index]['time'][index];
+    modified['T'] = (int.parse(modified['T']) - 1).toString();
     setState(() {
-      playGroundMode = !playGroundMode;
+      dataForEldey = widget.data[_tabController.index]['time'][timeIndex];
+    });
+  }
+
+  addTemp(index) {
+    Map modified = widget.data[_tabController.index]['time'][index];
+    modified['T'] = (int.parse(modified['T']) + 1).toString();
+    setState(() {
+      dataForEldey = widget.data[_tabController.index]['time'][timeIndex];
     });
   }
 
@@ -79,13 +89,13 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-            child: Eldey(data: dataForEldey, setPlayground: setPlayground) 
+            child: Eldey(data: dataForEldey) 
           ),
           Expanded(
             child: TabBarView(
               controller: _tabController,
               children: widget.data.map<Widget>((view) {
-                return ForecastCard(data: view['time'], setIndex: setIndex, timeIndex: timeIndex);
+                return ForecastCard(data: view['time'], setIndex: setIndex, timeIndex: timeIndex, takeTemp: takeTemp, addTemp: addTemp);
               }).toList(),
             ),
           )
