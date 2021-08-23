@@ -55,6 +55,8 @@ To see Eldey chaning halo colors based on temperature there is a little play fea
 
     - Double tap on Air temperature will increace the temperature by one point
 
+To see Eldey changing from sun to moon and vice versa select a different time
+
 Fun fact: 
 Did you know there are 284 stations scattered in Iceland that collect weather data? Bet you didn't!
 If you did, than you are a weather god or something...or just really bored and need some more fact cause you already

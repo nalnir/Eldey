@@ -15,7 +15,6 @@ import 'package:geolocator/geolocator.dart';
 Future<String> findClosest() async {
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     String jsonData = await rootBundle.loadString('assets/data/stationsList.json');
-    print(json.decode(jsonData)['list'].length);
     final jsonResult = json.decode(jsonData);
     var stationsList = jsonResult["list"] as List;
 
