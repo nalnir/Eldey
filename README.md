@@ -21,26 +21,38 @@ I've met some tourists in Iceland that underestimated the weather and that resul
 otherwise be super awesome. Cause Icelandic nature is awesome!
 So what am I trying to say? Why not make a suggestions based on a weather?
 Such as:
+
     - Clothing suggestions
+
     - Entertainment suggestions
+    
     - Travel suggestions
 
 Eldey can have some potential. Maybe we should take it there...
 
 Dependencies used:
+
   http - for API data fetching
+
   geolocator - getting current GPS location of the device
+
   path_provider - for storing and retrieving data in a local memory
+
   rive - for animations
+
   flutter_localizations - for multiple language support
+
   intl - for multiple language support
+
   flutter_launcher_icons - for App Icon
 
 Additional Info:
 Eldey supports english and icelandic languages based on your device localization.
 
 To see Eldey chaning halo colors based on temperature there is a little play feature:
+
     - One tap on Air temperature will decrease the temperature by one point
+
     - Double tap on Air temperature will increace the temperature by one point
 
 Fun fact: 
